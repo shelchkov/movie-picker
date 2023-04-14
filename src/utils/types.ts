@@ -9,6 +9,11 @@ export interface MovieType {
     }
   }
   titleText: {
-    test: string
+    text: string
+  }
+  releaseDate: {
+    year: number
+    day: number
+    month: number
   }
 }
