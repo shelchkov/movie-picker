@@ -2,10 +2,10 @@ import { h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
 import { Movie } from './Movie'
-import { NotSureButton } from "./NotSureButton"
+import { NotSureButton } from './NotSureButton'
 
 import { getPopularMovies } from '../utils/getClientMovies'
-import { MovieType } from '../utils/types'
+import { type MovieType } from '../utils/types'
 import { ScreenContainer } from './ui/ScreenContainer'
 
 export const App = () => {
@@ -13,20 +13,20 @@ export const App = () => {
   const [error, setError] = useState<string>()
 
   const getNextMovies = () => {
-    setMovies(movies => movies.slice(2))
+    setMovies(movies => movies?.slice(2))
   }
-  
+
   const handleSkip = () => {
     getNextMovies()
   }
 
   const pickFirstMovie = () => {
-    console.log("Pick", movies[0].id)
+    console.log('Pick', movies?.[0].id)
     getNextMovies()
   }
 
   const pickSecondMovie = () => {
-    console.log("Pick", movies[1].id)
+    console.log('Pick', movies?.[1].id)
     getNextMovies()
   }
 
@@ -37,6 +37,7 @@ export const App = () => {
         setMovies(data.results)
       } catch (error) {
         console.warn(error)
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         setError(`${error}`)
       }
     }

@@ -32,4 +32,4 @@ export const getMovies = async (page?: number, list?: MoviesList) => {
   return res.json()
 }
 
-export const getPopularMovies = (page?: number) => getMovies(page, MoviesList.POPULAR)
+export const getPopularMovies = async (page?: number) => getMovies(page, MoviesList.POPULAR)

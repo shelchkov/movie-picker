@@ -1,5 +1,7 @@
 ## Movie Picker
 
+[Demo](https://movie-picker-shelchkovy.vercel.app/)
+
 #### Stack
 
 Astro + Preact + Tailwind.
