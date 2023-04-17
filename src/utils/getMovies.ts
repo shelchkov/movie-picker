@@ -1,9 +1,9 @@
 enum MoviesList {
-  POPULAR = 'most_pop_movies'
+  POPULAR = 'most_pop_movies',
 }
 
 enum MoviesInfo {
-  BASE = 'base_info'
+  BASE = 'base_info',
 }
 
 const host = 'moviesdatabase.p.rapidapi.com'
@@ -25,11 +25,12 @@ export const getMovies = async (page?: number, list?: MoviesList) => {
   const res = await fetch(getUrl(page, list), {
     headers: {
       'X-RapidAPI-Key': import.meta.env.RAPID_API_KEY,
-      'X-RapidAPI-Host': host
-    }
+      'X-RapidAPI-Host': host,
+    },
   })
 
   return res.json()
 }
 
-export const getPopularMovies = async (page?: number) => getMovies(page, MoviesList.POPULAR)
+export const getPopularMovies = async (page?: number) =>
+  getMovies(page, MoviesList.POPULAR)

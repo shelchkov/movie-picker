@@ -13,7 +13,7 @@ export const App = () => {
   const [error, setError] = useState<string>()
 
   const getNextMovies = () => {
-    setMovies(movies => movies?.slice(2))
+    setMovies((movies) => movies?.slice(2))
   }
 
   const handleSkip = () => {
@@ -53,15 +53,35 @@ export const App = () => {
     return <ScreenContainer>Loading...</ScreenContainer>
   }
 
-  const imageWidth = Math.min(movies[0].primaryImage.width, movies[1].primaryImage.width, 400)
-  const firstHeight = imageWidth / movies[0].primaryImage.width * movies[0].primaryImage.height
-  const secondHeight = imageWidth / movies[1].primaryImage.width * movies[1].primaryImage.height
+  const imageWidth = Math.min(
+    movies[0].primaryImage.width,
+    movies[1].primaryImage.width,
+    400,
+  )
+  const firstHeight =
+    (imageWidth / movies[0].primaryImage.width) * movies[0].primaryImage.height
+  const secondHeight =
+    (imageWidth / movies[1].primaryImage.width) * movies[1].primaryImage.height
 
   return (
     <main class="p-8">
       <div class="flex justify-evenly">
-        <Movie imageSrc={movies[0].primaryImage.url} imageAlt={movies[0].primaryImage.caption.plainText} width={imageWidth} height={firstHeight} title={`${movies[0].titleText.text} (${movies[0].releaseDate.year})`} pick={pickFirstMovie} />
-        <Movie imageSrc={movies[1].primaryImage.url} imageAlt={movies[1].primaryImage.caption.plainText} width={imageWidth} height={secondHeight} title={`${movies[1].titleText.text} (${movies[1].releaseDate.year})`} pick={pickSecondMovie} />
+        <Movie
+          imageSrc={movies[0].primaryImage.url}
+          imageAlt={movies[0].primaryImage.caption.plainText}
+          width={imageWidth}
+          height={firstHeight}
+          title={`${movies[0].titleText.text} (${movies[0].releaseDate.year})`}
+          pick={pickFirstMovie}
+        />
+        <Movie
+          imageSrc={movies[1].primaryImage.url}
+          imageAlt={movies[1].primaryImage.caption.plainText}
+          width={imageWidth}
+          height={secondHeight}
+          title={`${movies[1].titleText.text} (${movies[1].releaseDate.year})`}
+          pick={pickSecondMovie}
+        />
       </div>
 
       <NotSureButton handleSkip={handleSkip} />

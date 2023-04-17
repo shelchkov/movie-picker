@@ -11,9 +11,22 @@ interface Props {
   pick: () => void
 }
 
-export const Movie = ({ imageSrc, imageAlt, width, height, title, pick }: Props) => (
+export const Movie = ({
+  imageSrc,
+  imageAlt,
+  width,
+  height,
+  title,
+  pick,
+}: Props) => (
   <div class="p-5 flex flex-col items-center justify-between">
-    <img src={imageSrc} class="mb-3" width={width} height={height} alt={imageAlt} />
+    <img
+      src={imageSrc}
+      class="mb-3"
+      width={width}
+      height={height}
+      alt={imageAlt}
+    />
 
     <div class="text-center">
       <p class="mb-3 text-base">{title}</p>
