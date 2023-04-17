@@ -36,6 +36,7 @@ module.exports = {
         arrowParens: 'always',
       },
     ],
-    '@typescript-eslint/no-floating-promises': 'off'
+    '@typescript-eslint/no-floating-promises': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off'
   }
 }
