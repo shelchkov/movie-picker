@@ -7,6 +7,7 @@ import { NotSureButton } from './NotSureButton'
 import { getPopularMovies } from '../utils/getClientMovies'
 import { type MovieType } from '../utils/types'
 import { ScreenContainer } from './ui/ScreenContainer'
+import { getRandomPage } from '../utils/utils'
 
 export const App = () => {
   const [movies, setMovies] = useState<MovieType[]>()
@@ -33,7 +34,7 @@ export const App = () => {
   useEffect(() => {
     const getMovies = async () => {
       try {
-        const data = await getPopularMovies(3)
+        const data = await getPopularMovies(getRandomPage())
         setMovies(data.results)
       } catch (error) {
         console.warn(error)
@@ -53,30 +54,27 @@ export const App = () => {
     return <ScreenContainer>Loading...</ScreenContainer>
   }
 
-  const imageWidth = Math.min(
-    movies[0].primaryImage.width,
-    movies[1].primaryImage.width,
-    400,
-  )
-  const firstHeight =
-    (imageWidth / movies[0].primaryImage.width) * movies[0].primaryImage.height
-  const secondHeight =
-    (imageWidth / movies[1].primaryImage.width) * movies[1].primaryImage.height
+  const firstImage = movies[0].primaryImage
+  const secondImage = movies[1].primaryImage
+
+  const imageWidth = Math.min(firstImage.width, secondImage.width, 400)
+  const firstHeight = (imageWidth / firstImage.width) * firstImage.height
+  const secondHeight = (imageWidth / secondImage.width) * secondImage.height
 
   return (
     <main class="p-8">
       <div class="flex justify-evenly">
         <Movie
-          imageSrc={movies[0].primaryImage.url}
-          imageAlt={movies[0].primaryImage.caption.plainText}
+          imageSrc={firstImage.url}
+          imageAlt={firstImage.caption.plainText}
           width={imageWidth}
           height={firstHeight}
           title={`${movies[0].titleText.text} (${movies[0].releaseDate.year})`}
           pick={pickFirstMovie}
         />
         <Movie
-          imageSrc={movies[1].primaryImage.url}
-          imageAlt={movies[1].primaryImage.caption.plainText}
+          imageSrc={secondImage.url}
+          imageAlt={secondImage.caption.plainText}
           width={imageWidth}
           height={secondHeight}
           title={`${movies[1].titleText.text} (${movies[1].releaseDate.year})`}

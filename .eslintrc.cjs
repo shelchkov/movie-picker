@@ -23,18 +23,19 @@ module.exports = {
     sourceType: 'module',
     project: ['./tsconfig.json']
   },
-  ignorePatterns: ["./eslintrc.cjs"],
+  ignorePatterns: ['./eslintrc.cjs'],
   rules: {
     '@typescript-eslint/strict-boolean-expressions': 'off',
     '@typescript-eslint/return-await': 'off',
-    "prettier/prettier": [
-      "error",
+    'prettier/prettier': [
+      'error',
       {
-        trailingComma: "all",
+        trailingComma: 'all',
         singleQuote: true,
         semi: false,
-        arrowParens: "always",
+        arrowParens: 'always',
       },
     ],
+    '@typescript-eslint/no-floating-promises': 'off'
   }
 }

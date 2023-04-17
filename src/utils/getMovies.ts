@@ -1,3 +1,5 @@
+import { type MovieType } from './types'
+
 enum MoviesList {
   POPULAR = 'most_pop_movies',
 }
@@ -21,7 +23,15 @@ const getUrl = (page?: number, list?: MoviesList) => {
   return url.slice(0, url.length - 1)
 }
 
-export const getMovies = async (page?: number, list?: MoviesList) => {
+export const getMovies = async (
+  page?: number,
+  list?: MoviesList,
+): Promise<{
+  error?: string
+  message?: string
+  results?: MovieType[]
+  page?: number
+}> => {
   const res = await fetch(getUrl(page, list), {
     headers: {
       'X-RapidAPI-Key': import.meta.env.RAPID_API_KEY,
