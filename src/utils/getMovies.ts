@@ -1,10 +1,12 @@
+import { type MovieType } from './types'
+
 enum MoviesList {
-  POPULAR = 'most_pop_movies'
+  POPULAR = 'most_pop_movies',
 }
 
-enum MoviesInfo {
-  BASE = 'base_info'
-}
+// enum MoviesInfo {
+//   BASE = 'base_info',
+// }
 
 const host = 'moviesdatabase.p.rapidapi.com'
 const getUrl = (page?: number, list?: MoviesList) => {
@@ -21,15 +23,24 @@ const getUrl = (page?: number, list?: MoviesList) => {
   return url.slice(0, url.length - 1)
 }
 
-export const getMovies = async (page?: number, list?: MoviesList) => {
+export const getMovies = async (
+  page?: number,
+  list?: MoviesList,
+): Promise<{
+  error?: string
+  message?: string
+  results?: MovieType[]
+  page?: number
+}> => {
   const res = await fetch(getUrl(page, list), {
     headers: {
       'X-RapidAPI-Key': import.meta.env.RAPID_API_KEY,
-      'X-RapidAPI-Host': host
-    }
+      'X-RapidAPI-Host': host,
+    },
   })
 
   return res.json()
 }
 
-export const getPopularMovies = (page?: number) => getMovies(page, MoviesList.POPULAR)
+export const getPopularMovies = async (page?: number) =>
+  getMovies(page, MoviesList.POPULAR)
