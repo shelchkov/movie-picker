@@ -14,8 +14,23 @@ export const App = () => {
   const [movies, setMovies] = useState<MovieType[]>()
   const [error, setError] = useState<string>()
 
+  const getNextPage = async () => {
+    try {
+      const data = await getPopularMovies(getRandomPage())
+      setMovies((movies) => [...(movies ?? []), ...data.results])
+    } catch (error) {
+      console.warn(error)
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      setError(`${error}`)
+    }
+  }
+
   const getNextMovies = () => {
     setMovies((movies) => movies?.slice(2))
+
+    if (movies && movies.length <= 4) {
+      getNextPage()
+    }
   }
 
   const handleSkip = () => {
@@ -33,19 +48,14 @@ export const App = () => {
   }
 
   useEffect(() => {
-    const getMovies = async () => {
-      try {
-        const data = await getPopularMovies(getRandomPage())
-        setMovies(data.results)
-      } catch (error) {
-        console.warn(error)
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        setError(`${error}`)
-      }
-    }
-
-    getMovies()
+    getNextPage()
   }, [])
+
+  // useEffect(() => {
+  //   movies?.slice(2, 4).forEach(({ primaryImage: { url } }) => {
+  //     setTimeout(() => preloadImage(url))
+  //   })
+  // }, [movies])
 
   if (error) {
     return <ScreenContainer>Something went wrong</ScreenContainer>
