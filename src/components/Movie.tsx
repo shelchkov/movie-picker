@@ -26,6 +26,7 @@ export const Movie = ({
       width={width}
       height={height}
       alt={imageAlt}
+      key={imageSrc}
     />
 
     <div class="text-center">
