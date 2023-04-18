@@ -17,6 +17,6 @@ export const get = async ({ request: { url } }: APIContext) => {
 
     return new Response(JSON.stringify(data))
   } catch (error) {
-    return new Response(null, { status: 500, statusText: error })
+    return new Response(JSON.stringify({ error }), { status: 500 })
   }
 }

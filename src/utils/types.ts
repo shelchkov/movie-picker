@@ -15,5 +15,5 @@ export interface MovieType {
     year: number
     day: number
     month: number
-  }
+  } | null
 }

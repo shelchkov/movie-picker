@@ -8,6 +8,7 @@ import { getPopularMovies } from '../utils/getClientMovies'
 import { type MovieType } from '../utils/types'
 import { ScreenContainer } from './ui/ScreenContainer'
 import { getRandomPage } from '../utils/utils'
+import { getMovieTitle } from '../utils/clientUtils'
 
 export const App = () => {
   const [movies, setMovies] = useState<MovieType[]>()
@@ -69,7 +70,7 @@ export const App = () => {
           imageAlt={firstImage.caption.plainText}
           width={imageWidth}
           height={firstHeight}
-          title={`${movies[0].titleText.text} (${movies[0].releaseDate.year})`}
+          title={getMovieTitle(movies[0])}
           pick={pickFirstMovie}
         />
         <Movie
@@ -77,7 +78,7 @@ export const App = () => {
           imageAlt={secondImage.caption.plainText}
           width={imageWidth}
           height={secondHeight}
-          title={`${movies[1].titleText.text} (${movies[1].releaseDate.year})`}
+          title={getMovieTitle(movies[1])}
           pick={pickSecondMovie}
         />
       </div>
