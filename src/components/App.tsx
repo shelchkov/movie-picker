@@ -11,14 +11,17 @@ import { getRandomPage } from '../utils/utils'
 import { getMovieTitle } from '../utils/clientUtils'
 import { pickMovie } from '../utils/pickClientMovie'
 
+const checkedPages = new Set<number>()
+
 export const App = () => {
   const [movies, setMovies] = useState<MovieType[]>()
   const [error, setError] = useState<string>()
 
   const getNextPage = async () => {
     try {
-      const data = await getPopularMovies(getRandomPage())
+      const data = await getPopularMovies(getRandomPage(24, checkedPages), true)
       setMovies((movies) => [...(movies ?? []), ...data.results])
+      data.page && checkedPages.add(data.page)
     } catch (error) {
       console.warn(error)
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
