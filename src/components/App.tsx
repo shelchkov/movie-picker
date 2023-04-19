@@ -9,6 +9,7 @@ import { type MovieType } from '../utils/types'
 import { ScreenContainer } from './ui/ScreenContainer'
 import { getRandomPage } from '../utils/utils'
 import { getMovieTitle } from '../utils/clientUtils'
+import { pickMovie } from '../utils/pickClientMovie'
 
 export const App = () => {
   const [movies, setMovies] = useState<MovieType[]>()
@@ -38,12 +39,18 @@ export const App = () => {
   }
 
   const pickFirstMovie = () => {
-    console.log('Pick', movies?.[0].id)
+    if (movies && movies?.length > 1) {
+      pickMovie(movies?.[0].id, movies?.[1].id)
+    }
+
     getNextMovies()
   }
 
   const pickSecondMovie = () => {
-    console.log('Pick', movies?.[1].id)
+    if (movies && movies?.length > 1) {
+      pickMovie(movies?.[1].id, movies?.[0].id)
+    }
+
     getNextMovies()
   }
 
