@@ -8,7 +8,7 @@ import { getPopularMovies } from '../utils/getClientMovies'
 import { type MovieType } from '../utils/types'
 import { ScreenContainer } from './ui/ScreenContainer'
 import { getRandomPage } from '../utils/utils'
-import { getMovieTitle } from '../utils/clientUtils'
+import { getDataFromImageCaption } from '../utils/clientUtils'
 import { pickMovie } from '../utils/pickClientMovie'
 
 const checkedPages = new Set<number>()
@@ -41,17 +41,9 @@ export const App = () => {
     getNextMovies()
   }
 
-  const pickFirstMovie = () => {
+  const handlePick = (index: number) => {
     if (movies && movies?.length > 1) {
-      pickMovie(movies?.[0].id, movies?.[1].id)
-    }
-
-    getNextMovies()
-  }
-
-  const pickSecondMovie = () => {
-    if (movies && movies?.length > 1) {
-      pickMovie(movies?.[1].id, movies?.[0].id)
+      pickMovie(movies?.[index].id, movies?.[(index + 1) % 2].id)
     }
 
     getNextMovies()
@@ -77,30 +69,32 @@ export const App = () => {
 
   const firstImage = movies[0].primaryImage
   const secondImage = movies[1].primaryImage
-
   const imageWidth = Math.min(firstImage.width, secondImage.width, 400)
-  const firstHeight = (imageWidth / firstImage.width) * firstImage.height
-  const secondHeight = (imageWidth / secondImage.width) * secondImage.height
 
   return (
     <main class="p-8">
       <div class="flex justify-evenly">
-        <Movie
-          imageSrc={firstImage.url}
-          imageAlt={firstImage.caption.plainText}
-          width={imageWidth}
-          height={firstHeight}
-          title={getMovieTitle(movies[0])}
-          pick={pickFirstMovie}
-        />
-        <Movie
-          imageSrc={secondImage.url}
-          imageAlt={secondImage.caption.plainText}
-          width={imageWidth}
-          height={secondHeight}
-          title={getMovieTitle(movies[1])}
-          pick={pickSecondMovie}
-        />
+        {[
+          movies.slice(0, 2).map((movie, index) => {
+            const image = movie.primaryImage
+            const imageHeight = (imageWidth / image.width) * image.height
+            const { cast, title } = getDataFromImageCaption(movie)
+            const pick = () => handlePick(index)
+
+            return (
+              <Movie
+                key={image.url}
+                imageSrc={image.url}
+                imageAlt={image.caption.plainText}
+                width={imageWidth}
+                height={imageHeight}
+                title={title}
+                cast={cast}
+                pick={pick}
+              />
+            )
+          }),
+        ]}
       </div>
 
       <NotSureButton handleSkip={handleSkip} />

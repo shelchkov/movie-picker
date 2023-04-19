@@ -8,6 +8,7 @@ interface Props {
   width?: number
   height?: number
   title: string
+  cast?: string
   pick: () => void
 }
 
@@ -17,9 +18,10 @@ export const Movie = ({
   width,
   height,
   title,
+  cast,
   pick,
 }: Props) => (
-  <div class="p-5 flex flex-col items-center justify-between">
+  <div class="p-5 flex flex-col items-center justify-between max-w-md">
     <img
       src={imageSrc}
       class="mb-3"
@@ -31,6 +33,7 @@ export const Movie = ({
 
     <div class="text-center">
       <p class="mb-3 text-base">{title}</p>
+      {cast && <p class="mb-3 text-sm font-light">{cast}</p>}
       <Button handleClick={pick}>Pick</Button>
     </div>
   </div>
