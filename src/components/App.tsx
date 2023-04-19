@@ -71,7 +71,7 @@ export const App = () => {
     return <ScreenContainer>Something went wrong</ScreenContainer>
   }
 
-  if (!movies) {
+  if (!movies || movies.length === 0) {
     return <ScreenContainer>Loading...</ScreenContainer>
   }
 
