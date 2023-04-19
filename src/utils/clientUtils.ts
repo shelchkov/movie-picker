@@ -6,17 +6,21 @@ import { type MovieType } from './types'
 
 export const getDataFromImageCaption = (
   movie: MovieType,
-): { cast?: string; title: string } => {
+): { cast?: string; title: string; alternativeTitle?: string } => {
   const caption = movie.primaryImage.caption.plainText
   const title = movie.titleText.text
 
   if (!caption) {
-    return { title: caption }
+    return { title }
   }
 
   const indexOfTitle = caption.indexOf(title)
 
-  if (indexOfTitle < 1) {
+  if (indexOfTitle === -1) {
+    return { title: caption, alternativeTitle: title }
+  }
+
+  if (indexOfTitle === 0) {
     return { title: caption }
   }
 

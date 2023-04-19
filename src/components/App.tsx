@@ -78,7 +78,8 @@ export const App = () => {
           movies.slice(0, 2).map((movie, index) => {
             const image = movie.primaryImage
             const imageHeight = (imageWidth / image.width) * image.height
-            const { cast, title } = getDataFromImageCaption(movie)
+            const { cast, title, alternativeTitle } =
+              getDataFromImageCaption(movie)
             const pick = () => handlePick(index)
 
             return (
@@ -89,7 +90,7 @@ export const App = () => {
                 width={imageWidth}
                 height={imageHeight}
                 title={title}
-                cast={cast}
+                cast={cast || alternativeTitle}
                 pick={pick}
               />
             )
