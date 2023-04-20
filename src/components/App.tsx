@@ -90,6 +90,7 @@ export const App = () => {
                 width={imageWidth}
                 height={imageHeight}
                 title={title}
+                // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
                 cast={cast || alternativeTitle}
                 pick={pick}
               />
