@@ -2,6 +2,7 @@ import { type MovieType } from './types'
 
 enum MoviesList {
   POPULAR = 'most_pop_movies',
+  ENGLISH_TOP = 'top_rated_english_250',
 }
 
 // enum MoviesInfo {
@@ -44,3 +45,6 @@ export const getMovies = async (
 
 export const getPopularMovies = async (page?: number) =>
   getMovies(page, MoviesList.POPULAR)
+
+export const getTopMovies = async (page?: number) =>
+  getMovies(page, MoviesList.ENGLISH_TOP)
