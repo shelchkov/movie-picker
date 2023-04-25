@@ -1,13 +1,14 @@
 import { signal } from '@preact/signals'
 import { h } from 'preact'
 import { useEffect } from 'preact/hooks'
+import { getDataFromImageCaption } from '../utils/clientUtils'
 import { getDBMovies } from '../utils/getClientMovies'
-import { type DBMovie } from '../utils/types'
+import { type MovieType } from '../utils/types'
 import { LoadingComponent } from './ui/LoadingComponent'
 import { MovieCard } from './ui/MovieCard'
 import { ScreenContainer } from './ui/ScreenContainer'
 
-const movies = signal<DBMovie[] | undefined>(undefined)
+const movies = signal<MovieType[] | undefined>(undefined)
 const error = signal<string | undefined>(undefined)
 
 export const MoviesList = () => {
@@ -29,9 +30,18 @@ export const MoviesList = () => {
         <ScreenContainer>Movies not found</ScreenContainer>
       ) : (
         <div>
-          {movies.value?.map((movie) => (
-            <MovieCard {...movie} key={movie.movieId} />
-          ))}
+          {movies.value?.map((movie) => {
+            const { title } = getDataFromImageCaption(movie)
+
+            return (
+              <MovieCard
+                imageSrc={movie.primaryImage.url}
+                title={title}
+                imageAlt={movie.primaryImage.caption.plainText}
+                key={movie.id}
+              />
+            )
+          })}
         </div>
       )}
     </LoadingComponent>

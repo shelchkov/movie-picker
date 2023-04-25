@@ -1,11 +1,14 @@
 import { h } from 'preact'
-import { type DBMovie } from '../../utils/types'
 
-type Props = DBMovie
+interface Props {
+  imageSrc: string
+  title: string
+  imageAlt?: string
+}
 
-export const MovieCard = ({ imageSrc, title }: Props) => (
+export const MovieCard = ({ imageSrc, title, imageAlt }: Props) => (
   <div class="flex p-2">
-    <img src={imageSrc} height={150} width={150} class="mr-2" />
+    <img src={imageSrc} height={150} width={150} class="mr-2" alt={imageAlt} />
     <p>{title}</p>
   </div>
 )

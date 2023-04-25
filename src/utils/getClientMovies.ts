@@ -1,4 +1,4 @@
-import { type DBMovie, type MovieType } from './types'
+import { type MovieType } from './types'
 
 export const getPopularMovies = async (
   page = 1,
@@ -22,7 +22,7 @@ export const getPopularMovies = async (
 
 export const getDBMovies = async () => {
   const res = await fetch('/api/movies')
-  const data: { movies: DBMovie[] } = await res.json()
+  const data: { movies: MovieType[] } = await res.json()
 
   return data
 }

@@ -1,4 +1,5 @@
 import { connectToDB } from '../../utils/database'
+import { getMoviesData } from '../../utils/getMovies'
 import { type DBMovie } from '../../utils/types'
 
 const getMovies = async () => {
@@ -22,5 +23,15 @@ const getMovies = async () => {
 export const get = async () => {
   const movies = await getMovies()
 
-  return new Response(JSON.stringify({ movies }))
+  if (!movies) {
+    return new Response(
+      JSON.stringify({ error: "Couldn't connect to the database" }),
+      { status: 500 },
+    )
+  }
+
+  const moviesIds = movies.map(({ movieId }) => movieId)
+  const data = await getMoviesData(moviesIds)
+
+  return new Response(JSON.stringify({ movies: data }))
 }
