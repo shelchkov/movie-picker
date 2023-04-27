@@ -1,7 +1,7 @@
-import { MongoClient } from 'mongodb'
+import { MongoClient, type MongoClientOptions } from 'mongodb'
 
 const uri = import.meta.env.MONGODB_URI
-const options = {}
+const options: MongoClientOptions = { tlsAllowInvalidCertificates: true }
 
 if (!uri) {
   throw new Error('Mongo URI is not provided')
