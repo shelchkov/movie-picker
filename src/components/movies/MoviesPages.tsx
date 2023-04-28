@@ -12,6 +12,13 @@ interface Props {
 const movies = signal<MovieType[] | undefined>(undefined)
 const isLoading = signal(false)
 
+const toggleLoading = (show: boolean) => {
+  const container = document.querySelector(
+    '#movies-loading-container',
+  ) as HTMLDivElement
+  container.style.display = show ? 'block' : 'none'
+}
+
 export const MoviesPages = ({ moviesIds, pageSize }: Props) => {
   const nextIds = useRef(moviesIds)
 
@@ -40,10 +47,10 @@ export const MoviesPages = ({ moviesIds, pageSize }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return (
-    <>
-      <MoviesList movies={movies.value} />
-      {isLoading.value && <div>Loading</div>}
-    </>
-  )
+  useEffect(() => {
+    toggleLoading(isLoading.value)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading.value])
+
+  return <MoviesList movies={movies.value} />
 }
