@@ -21,7 +21,7 @@ export const App = () => {
     try {
       const data = await getPopularMovies(getRandomPage(24, checkedPages), true)
       setMovies((movies) => [...(movies ?? []), ...data.results])
-      data.page && checkedPages.add(data.page)
+      data.page && checkedPages.add(parseInt(data.page, 10))
     } catch (error) {
       console.warn(error)
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions

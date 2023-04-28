@@ -3,7 +3,7 @@ import { type MovieType } from './types'
 export const getPopularMovies = async (
   page = 1,
   top250?: boolean,
-): Promise<{ page: number; results: MovieType[] }> => {
+): Promise<{ page: string; results: MovieType[] }> => {
   let url = `./api/popular-movies?page=${page}`
 
   if (top250) {
@@ -16,6 +16,13 @@ export const getPopularMovies = async (
   if (data.error) {
     throw new Error(data.error)
   }
+
+  return data
+}
+
+export const getDBMovies = async () => {
+  const res = await fetch('/api/movies')
+  const data: { movies: MovieType[] } = await res.json()
 
   return data
 }
