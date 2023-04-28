@@ -69,11 +69,18 @@ export const getMoviesData = async (
     ',',
   )}`
   const res = await fetch(url, options)
-  const movies: { results: MovieType[] } = await res.json()
+  const { results, error }: { results: MovieType[] | null; error?: string } =
+    await res.json()
+
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  if (error || !results) {
+    throw new Error(error)
+  }
+
   const result: MovieType[] = []
 
   moviesIds.forEach((movieId) => {
-    const movie = movies.results.find(({ id }) => id === movieId)
+    const movie = results.find(({ id }) => id === movieId)
 
     if (movie) {
       result.push(movie)
