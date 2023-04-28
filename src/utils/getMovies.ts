@@ -1,9 +1,14 @@
 import { connectToDB } from './database'
-import { type DBMovie, type MovieType } from './types'
+import { type MovieType } from './types'
 
 enum MoviesList {
   POPULAR = 'most_pop_movies',
   ENGLISH_TOP = 'top_rated_english_250',
+}
+
+interface DBMovie {
+  movieId: string
+  rating: number
 }
 
 // enum MoviesInfo {

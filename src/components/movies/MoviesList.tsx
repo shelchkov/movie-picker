@@ -1,8 +1,8 @@
 import { h } from 'preact'
-import { getDataFromImageCaption } from '../utils/clientUtils'
-import { type MovieType } from '../utils/types'
+import { getDataFromImageCaption } from '../../utils/utils'
+import { type MovieType } from '../../utils/types'
 import { MovieCard } from './ui/MovieCard'
-import { ScreenContainer } from './ui/ScreenContainer'
+import { ScreenContainer } from '../ui/ScreenContainer'
 
 interface Props {
   movies: MovieType[] | undefined

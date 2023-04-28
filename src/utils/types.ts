@@ -17,8 +17,3 @@ export interface MovieType {
     month: number
   } | null
 }
-
-export interface DBMovie {
-  movieId: string
-  rating: number
-}
