@@ -17,7 +17,7 @@ export const MoviesList = ({ movies }: Props) => {
   }
 
   return (
-    <div class="flex flex-wrap justify-center">
+    <>
       {movies.map((movie) => {
         const { title, cast, alternativeTitle } = getDataFromImageCaption(movie)
         const { width, height } = movie.primaryImage
@@ -36,6 +36,6 @@ export const MoviesList = ({ movies }: Props) => {
           />
         )
       })}
-    </div>
+    </>
   )
 }

@@ -4,6 +4,7 @@ import MainLayout from '../layouts/MainLayout.astro'
 import { MovieType } from '../utils/types'
 import { getDBMovies, getMoviesData } from '../utils/getMovies'
 import { LoadingComponent } from '../components/ui/LoadingComponent'
+import { MoviesPages } from '../components/movies/MoviesPages'
 
 let movies: MovieType[] | undefined
 let error: string | undefined
@@ -33,6 +34,10 @@ if (!error) {
 
 <MainLayout title='Movies'>
   <LoadingComponent isLoading={!movies} error={error}>
-    <MoviesList movies={movies} />
+    <div class="flex flex-wrap justify-center">
+      <MoviesList movies={movies} />
+
+      <MoviesPages client:visible moviesIds={moviesIds} pageSize={pageSize} />
+    </div>
   </LoadingComponent>
 </MainLayout>

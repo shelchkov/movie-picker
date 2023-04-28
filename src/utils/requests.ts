@@ -28,3 +28,9 @@ export const pickMovie = async (pick: string, against: string) => {
 
   return res.json()
 }
+
+export const getMoviesByIds = async (ids: string[]): Promise<MovieType[]> => {
+  const res = await fetch(`/api/movies?moviesIds=${ids.join(',')}`)
+
+  return res.json()
+}
