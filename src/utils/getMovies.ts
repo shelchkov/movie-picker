@@ -1,4 +1,5 @@
-import { DBMovie, type MovieType } from './types'
+import { connectToDB } from './database'
+import { type DBMovie, type MovieType } from './types'
 
 enum MoviesList {
   POPULAR = 'most_pop_movies',
@@ -72,6 +73,24 @@ export const getMoviesData = async (
     if (movie) {
       result.push(movie)
     }
+  })
+
+  return result
+}
+
+export const getDBMovies = async () => {
+  const db = await connectToDB()
+
+  if (!db) {
+    throw new Error("Couldn't connect to the database")
+  }
+
+  const collection = db.collection('movies')
+  const cursor = collection.find<DBMovie>({}, { sort: { rating: -1 } })
+
+  const result: DBMovie[] = []
+  await cursor.forEach((movie) => {
+    result.push(movie)
   })
 
   return result

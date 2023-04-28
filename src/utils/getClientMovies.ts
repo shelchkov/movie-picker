@@ -19,10 +19,3 @@ export const getPopularMovies = async (
 
   return data
 }
-
-export const getDBMovies = async () => {
-  const res = await fetch('/api/movies')
-  const data: { movies: MovieType[] } = await res.json()
-
-  return data
-}
