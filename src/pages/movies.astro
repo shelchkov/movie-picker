@@ -1,5 +1,4 @@
 ---
-import { MoviesList } from '../components/movies/MoviesList'
 import MainLayout from '../layouts/MainLayout.astro'
 import { MovieType } from '../utils/types'
 import { getDBMovies, getMoviesData } from '../utils/getMovies'
@@ -34,12 +33,6 @@ if (!error) {
 
 <MainLayout title='Movies'>
   <LoadingComponent isLoading={!movies} error={error}>
-    <div class="flex flex-wrap justify-center">
-      <MoviesList movies={movies} />
-
-      <MoviesPages client:visible moviesIds={moviesIds} pageSize={pageSize} />
-    </div>
-
-    <div id='movies-loading-container' class='hidden text-center p-6 text-base'>Loading</div>
+    <MoviesPages client:visible moviesIds={moviesIds} pageSize={pageSize} movies={movies} />
   </LoadingComponent>
 </MainLayout>

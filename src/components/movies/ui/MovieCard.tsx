@@ -1,4 +1,4 @@
-import { h } from 'preact'
+import { type RefObject, h } from 'preact'
 
 interface Props {
   imageSrc: string
@@ -7,6 +7,7 @@ interface Props {
   cast?: string
   imgWidth: number
   imgHeight: number
+  reference?: RefObject<HTMLDivElement>
 }
 
 export const MovieCard = ({
@@ -16,8 +17,12 @@ export const MovieCard = ({
   cast,
   imgWidth,
   imgHeight,
+  reference,
 }: Props) => (
-  <div class="flex p-2 m-2 w-128 border border-zinc-500 rounded">
+  <div
+    class="flex p-2 m-2 w-128 border border-zinc-500 rounded"
+    ref={reference}
+  >
     <img
       src={imageSrc}
       height={imgHeight}
