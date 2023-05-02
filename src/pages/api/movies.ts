@@ -1,37 +1,18 @@
-import { connectToDB } from '../../utils/database'
+import { type APIContext } from 'astro'
 import { getMoviesData } from '../../utils/getMovies'
-import { type DBMovie } from '../../utils/types'
 
-const getMovies = async () => {
-  const db = await connectToDB()
+export const get = async ({ request: { url } }: APIContext) => {
+  const params = new URLSearchParams(new URL(url).search)
+  const moviesIds = params.get('moviesIds')?.split(',')
 
-  if (!db) {
-    return
-  }
-
-  const collection = db.collection('movies')
-  const cursor = collection.find<DBMovie>({}, { sort: { rating: -1 } })
-
-  const result: DBMovie[] = []
-  await cursor.forEach((movie) => {
-    result.push(movie)
-  })
-
-  return result
-}
-
-export const get = async () => {
-  const movies = await getMovies()
-
-  if (!movies) {
+  if (!moviesIds) {
     return new Response(
-      JSON.stringify({ error: "Couldn't connect to the database" }),
-      { status: 500 },
+      JSON.stringify({ error: 'Property moviesIds is required' }),
+      { status: 403 },
     )
   }
 
-  const moviesIds = movies.map(({ movieId }) => movieId)
-  const data = await getMoviesData(moviesIds)
+  const movies = await getMoviesData(moviesIds)
 
-  return new Response(JSON.stringify({ movies: data }))
+  return new Response(JSON.stringify(movies))
 }

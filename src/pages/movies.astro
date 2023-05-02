@@ -1,8 +1,38 @@
 ---
-import { MoviesList } from "../components/MoviesList";
-import MainLayout from "../layouts/MainLayout.astro"
+import MainLayout from '../layouts/MainLayout.astro'
+import { MovieType } from '../utils/types'
+import { getDBMovies, getMoviesData } from '../utils/getMovies'
+import { LoadingComponent } from '../components/ui/LoadingComponent'
+import { MoviesPages } from '../components/movies/MoviesPages'
+
+let movies: MovieType[] | undefined
+let error: string | undefined
+let moviesIds: string[] = []
+
+const pageSize = 24
+
+try {
+  console.log("Rendering movies page", new Date())
+  const dbMovies = await getDBMovies()
+  moviesIds = dbMovies.map(({ movieId }) => movieId)
+  movies = await getMoviesData(moviesIds.slice(0, pageSize))
+  moviesIds = moviesIds.slice(pageSize)
+} catch (errorMessage) {
+  console.warn(errorMessage)
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  error = `${errorMessage}`
+}
+
+if (!error) {
+  Astro.response.headers.set(
+    'Cache-Control',
+    `s-maxage=300, stale-while-revalidate`,
+  )
+}
 ---
 
 <MainLayout title='Movies'>
-  <MoviesList client:visible />
+  <LoadingComponent isLoading={!movies} error={error}>
+    <MoviesPages client:visible moviesIds={moviesIds} pageSize={pageSize} movies={movies} />
+  </LoadingComponent>
 </MainLayout>

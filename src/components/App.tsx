@@ -1,15 +1,13 @@
 import { h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 
-import { Movie } from './Movie'
-import { NotSureButton } from './NotSureButton'
+import { Movie } from './index/Movie'
+import { NotSureButton } from './index/NotSureButton'
 
-import { getPopularMovies } from '../utils/getClientMovies'
+import { getPopularMovies, pickMovie } from '../utils/requests'
 import { type MovieType } from '../utils/types'
 import { ScreenContainer } from './ui/ScreenContainer'
-import { getRandomPage } from '../utils/utils'
-import { getDataFromImageCaption } from '../utils/clientUtils'
-import { pickMovie } from '../utils/pickClientMovie'
+import { getRandomPage, getDataFromImageCaption } from '../utils/utils'
 
 const checkedPages = new Set<number>()
 

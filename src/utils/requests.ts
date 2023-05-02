@@ -20,9 +20,17 @@ export const getPopularMovies = async (
   return data
 }
 
-export const getDBMovies = async () => {
-  const res = await fetch('/api/movies')
-  const data: { movies: MovieType[] } = await res.json()
+export const pickMovie = async (pick: string, against: string) => {
+  const res = await fetch('/api/pick-movie', {
+    method: 'POST',
+    body: JSON.stringify({ pick, against }),
+  })
 
-  return data
+  return res.json()
+}
+
+export const getMoviesByIds = async (ids: string[]): Promise<MovieType[]> => {
+  const res = await fetch(`/api/movies?moviesIds=${ids.join(',')}`)
+
+  return res.json()
 }

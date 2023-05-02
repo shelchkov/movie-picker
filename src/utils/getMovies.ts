@@ -1,8 +1,14 @@
-import { DBMovie, type MovieType } from './types'
+import { connectToDB } from './database'
+import { type MovieType } from './types'
 
 enum MoviesList {
   POPULAR = 'most_pop_movies',
   ENGLISH_TOP = 'top_rated_english_250',
+}
+
+interface DBMovie {
+  movieId: string
+  rating: number
 }
 
 // enum MoviesInfo {
@@ -63,15 +69,40 @@ export const getMoviesData = async (
     ',',
   )}`
   const res = await fetch(url, options)
-  const movies: { results: MovieType[] } = await res.json()
+  const { results, error }: { results: MovieType[] | null; error?: string } =
+    await res.json()
+
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  if (error || !results) {
+    throw new Error(error)
+  }
+
   const result: MovieType[] = []
 
   moviesIds.forEach((movieId) => {
-    const movie = movies.results.find(({ id }) => id === movieId)
+    const movie = results.find(({ id }) => id === movieId)
 
     if (movie) {
       result.push(movie)
     }
+  })
+
+  return result
+}
+
+export const getDBMovies = async () => {
+  const db = await connectToDB()
+
+  if (!db) {
+    throw new Error("Couldn't connect to the database")
+  }
+
+  const collection = db.collection('movies')
+  const cursor = collection.find<DBMovie>({}, { sort: { rating: -1 } })
+
+  const result: DBMovie[] = []
+  await cursor.forEach((movie) => {
+    result.push(movie)
   })
 
   return result
